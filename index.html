@@ -1,0 +1,125 @@
+<script type="text/javascript">
+	//intitalize scores
+	let playerScore = 0
+	let	computerScore = 0
+
+	//values for how often the player uses a certain object
+	let rockCount = 0
+	let paperCount = 0
+	let scissorsCount = 0
+	let otherCount = 0
+
+	//how the computer determins R, P, S
+	function computerPlay() {
+		let randomNumber = Math.floor(Math.random()*3)
+		if (randomNumber === 0) {
+			return "rock" 
+		} else if (randomNumber === 1) {
+			return "paper"
+		} else {
+			return "scissors"
+		}
+	}
+	
+	
+
+
+	function playRound() {
+		//how player inputs info
+		let playerSelection = prompt("Rock, paper, scissors, shoot!")
+		//how computer inputs info
+		const computerSelection = computerPlay()
+		
+
+		//Keeps track of how often the player 
+
+		if (playerSelection.toLowerCase() == "rock") {
+			rockCount++
+		} else if (playerSelection.toLowerCase() == "paper") {
+			paperCount++
+		} else if (playerSelection.toLowerCase() == "scissors") {
+			scissorsCount++
+		} else if (playerSelection.toLowerCase() !== "rock" || "paper" || "scissors") {
+			otherCount++
+		}
+		//convert player's answer to lowecase so the game is case insensitive
+		//compare scores for tie
+		if ((playerSelection.toLowerCase() == "rock"
+			&& 
+			computerSelection == "rock") 
+			|| (playerSelection.toLowerCase() == "paper" 
+				&& computerSelection == "paper") 
+			|| (playerSelection.toLowerCase() == "scissors" 
+				&& computerSelection == "scissors")) {
+				console.log("Same answers! It's a tie!") 
+		//player wins scenarios
+		} else if (playerSelection.toLowerCase()  == "rock" 
+			&& computerSelection == "scissors") {
+			console.log("Rock beats scissors! You win!") 
+			playerScore++
+		}
+		else if (playerSelection.toLowerCase()  == "paper" 
+			&& computerSelection == "rock")  {
+			console.log("Paper beats rock! You win!") 
+			playerScore++
+		} else if (playerSelection.toLowerCase()  == "scissors" 
+			&& computerSelection == "paper"){ 
+			console.log("Scissors beats paper! You win!") 
+			playerScore++
+		//computer wins scenarios
+		} else if (computerSelection  == "rock" 
+			&& playerSelection.toLowerCase() == "scissors") {
+			console.log("Rock beats scissors! Computer wins!") 
+		}
+		else if (computerSelection  == "paper" 
+			&& playerSelection.toLowerCase() == "rock")  {
+			console.log("Paper beats rock! Computer wins!") 
+			computerScore++
+		} else if (computerSelection  == "scissors" 
+			&& playerSelection.toLowerCase() == "paper"){ 
+			console.log("Scissors beats paper! Computer wins!" ) 
+			computerScore++
+		//player didn't enter rock, paper, or scissors	
+		} else {
+			console.log("You can't use that in this game. Maybe it was a typo?")
+			}
+
+		
+		}
+	
+
+    //pass playerSelection and computerSelection in from playRound
+	function game(playerSelection, computerSelection) {
+		
+
+
+		for(i = 0; i < 5; i++) {
+			//start game round
+			playRound()
+			 
+			console.log ("Player: " + playerScore + ", Computer: " + computerScore)
+			
+		} 
+			//message declaring the winner
+		if (playerScore > computerScore) {
+			console.log("Player wins the match!")
+		} else if (computerScore > playerScore) {
+			console.log("Computer wins the match!")
+		} else {
+			console.log("It's a tie!")
+		}
+			//Message expressing concern if user racked up 5 points in one item category
+		if (rockCount == 5) {
+			console.log("...Wow, you must really like rocks, huh?")
+		} else if (paperCount == 5) {
+			console.log("...Wow, you must really like paper, huh?")
+		} else if (scissorsCount == 5) {
+			console.log("...Wow, you must really like scissors, huh?")
+		} else if ( otherCount == 5) {
+			console.log("You don't seem to like this game very much...")
+		}
+	}
+	// call function to start 5 rounds of the game
+	game()
+	
+</script>
