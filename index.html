@@ -1,7 +1,21 @@
 <head>
-<title>Rock-Paper-Scissors (Console)</title>	
+<title>Rock-Paper-Scissors (The Most Basic UI)</title>	
 </head>
+<div id="game">
+<h1>Rock, Paper, Scissors, Shoot!</h1>
+
+<button id="rock-btn" name="rock">Rock</button>
+<button id="paper-btn" name="paper">Paper</button>
+<button id="scissors-btn" name="scissors">Scissors</button>
+</div>
+<div id="game-results">
+	
+</div>
+
 <script type="text/javascript">
+	let gameCount = 0
+
+
 	//intitalize scores
 	let playerScore = 0
 	let	computerScore = 0
@@ -10,7 +24,9 @@
 	let rockCount = 0
 	let paperCount = 0
 	let scissorsCount = 0
-	let otherCount = 0
+
+	
+		
 
 	//how the computer determins R, P, S
 	function computerPlay() {
@@ -27,102 +43,143 @@
 	
 
 
-	function playRound() {
+	function playRound(e) {
 		//how player inputs info
-		let playerSelection = prompt("Rock, paper, scissors, shoot!")
+		let playerSelection = e.path[0].name
 		//how computer inputs info
 		const computerSelection = computerPlay()
 		
+		const resultsDiv = document.querySelector('#game-results')
+		const resultsTxt = document.createElement('p')
+		const scoreTxt = document.createElement('p')
+		const gameNum = document.createElement('h3')
+		const itemJudge = document.createElement('h4')
+		
+		
 
-		//Keeps track of how often the player 
+		//Keeps track of how often the player picks one item over another.
 
-		if (playerSelection.toLowerCase() == "rock") {
+		if (playerSelection == "rock") {
 			rockCount++
-		} else if (playerSelection.toLowerCase() == "paper") {
+		} else if (playerSelection == "paper") {
 			paperCount++
-		} else if (playerSelection.toLowerCase() == "scissors") {
+		} else if (playerSelection == "scissors") {
 			scissorsCount++
-		} else if (playerSelection.toLowerCase() !== "rock" || "paper" || "scissors") {
-			otherCount++
-		}
+		} 
+		
 		//convert player's answer to lowecase so the game is case insensitive
 		//compare scores for tie
-		if ((playerSelection.toLowerCase() == "rock"
+		if ((playerSelection === "rock"
 			&& 
-			computerSelection == "rock") 
-			|| (playerSelection.toLowerCase() == "paper" 
-				&& computerSelection == "paper") 
-			|| (playerSelection.toLowerCase() == "scissors" 
-				&& computerSelection == "scissors")) {
-				console.log("Same answers! It's a tie!") 
+			computerSelection === "rock") 
+			|| (playerSelection === "paper" 
+				&& computerSelection === "paper") 
+			|| (playerSelection === "scissors" 
+				&& computerSelection === "scissors")) {
+				gameCount++
+				resultsDiv.appendChild(gameNum)
+				resultsTxt.textContent = "Same answers! It's a tie!"
+				resultsDiv.appendChild(resultsTxt); 
+				resultsDiv.appendChild(scoreTxt);
+
 		//player wins scenarios
-		} else if (playerSelection.toLowerCase()  == "rock" 
-			&& computerSelection == "scissors") {
-			console.log("Rock beats scissors! You win!") 
+		} else if (playerSelection  === "rock" 
+			&& computerSelection === "scissors") {
+			resultsTxt.textContent = "Rock beats scissors! You win!"
+			gameCount++
+			resultsDiv.appendChild(gameNum)
+			resultsDiv.appendChild(resultsTxt)
+			 
 			playerScore++
+			resultsDiv.appendChild(scoreTxt);
+			
 		}
-		else if (playerSelection.toLowerCase()  == "paper" 
-			&& computerSelection == "rock")  {
-			console.log("Paper beats rock! You win!") 
+		else if (playerSelection  === "paper" 
+			&& computerSelection === "rock")  {
+			gameCount++
+			resultsDiv.appendChild(gameNum) 
+			resultsTxt.textContent = "Paper beats rock! You win!"
+			resultsDiv.appendChild(resultsTxt)
 			playerScore++
-		} else if (playerSelection.toLowerCase()  == "scissors" 
-			&& computerSelection == "paper"){ 
-			console.log("Scissors beats paper! You win!") 
+			resultsDiv.appendChild(scoreTxt);
+			
+		} else if (playerSelection  === "scissors" 
+			&& computerSelection === "paper"){ 
+			gameCount++
+			resultsDiv.appendChild(gameNum)
+			resultsTxt.textContent = "Scissors beats paper! You win!"
+			resultsDiv.appendChild(resultsTxt)
 			playerScore++
 		//computer wins scenarios
-		} else if (computerSelection  == "rock" 
-			&& playerSelection.toLowerCase() == "scissors") {
-			console.log("Rock beats scissors! Computer wins!") 
-		}
-		else if (computerSelection  == "paper" 
-			&& playerSelection.toLowerCase() == "rock")  {
-			console.log("Paper beats rock! Computer wins!") 
+		} else if (computerSelection  === "rock" 
+			&& playerSelection === "scissors") {
+			gameCount++
+			resultsDiv.appendChild(gameNum)
+			resultsTxt.textContent = "Rock beats scissors! Computer wins!"
+			resultsDiv.appendChild(resultsTxt)
+			
 			computerScore++
-		} else if (computerSelection  == "scissors" 
-			&& playerSelection.toLowerCase() == "paper"){ 
-			console.log("Scissors beats paper! Computer wins!" ) 
-			computerScore++
-		//player didn't enter rock, paper, or scissors	
-		} else {
-			console.log("You can't use that in this game. Maybe it was a typo?")
-			}
-
-		
-		}
-	
-
-    //pass playerSelection and computerSelection in from playRound
-	function game(playerSelection, computerSelection) {
-		
-
-
-		for(i = 0; i < 5; i++) {
-			//start game round
-			playRound()
+			resultsDiv.appendChild(scoreTxt);
 			 
-			console.log ("Player: " + playerScore + ", Computer: " + computerScore)
+		}
+		else if (computerSelection  === "paper" 
+			&& playerSelection === "rock")  {
+			gameCount++
+			resultsDiv.appendChild(gameNum)
+			resultsTxt.textContent = "Paper beats rock! Computer wins!"
+			resultsDiv.appendChild(resultsTxt)
+			 
+			computerScore++
+			resultsDiv.appendChild(scoreTxt);
+			
+		} else if (computerSelection  === "scissors" 
+			&& playerSelection == "paper"){
+			gameCount++
+			resultsDiv.appendChild(gameNum) 
+			resultsTxt.textContent = "Scissors beats paper! Computer wins!"
+			resultsDiv.appendChild(resultsTxt)
+			 
+			computerScore++
+			resultsDiv.appendChild(scoreTxt);
 			
 		} 
-			//message declaring the winner
-		if (playerScore > computerScore) {
-			console.log("Player wins the match!")
-		} else if (computerScore > playerScore) {
-			console.log("Computer wins the match!")
-		} else {
-			console.log("It's a tie!")
+
+
+		scoreTxt.textContent = "Player: " + playerScore + ", Computer: " + computerScore;
+
+		if (gameCount <= 5) {
+			gameNum.textContent = "Game " + gameCount + " of 5"
+		} else { 
+			gameNum.textContent = "Game 1 of 5"
+			gameCount = 1
+			computerScore = 0
+			playerScore = 0
+			rockCount = 0
+			paperCount = 0
+			scissorsCount = 0
 		}
-			//Message expressing concern if user racked up 5 points in one item category
-		if (rockCount == 5) {
-			console.log("...Wow, you must really like rocks, huh?")
-		} else if (paperCount == 5) {
-			console.log("...Wow, you must really like paper, huh?")
-		} else if (scissorsCount == 5) {
-			console.log("...Wow, you must really like scissors, huh?")
-		} else if ( otherCount == 5) {
-			console.log("You don't seem to like this game very much...")
+
+		if (gameCount == 5 && rockCount == 5) {
+			itemJudge.textContent = "You played Rock all 5 times! You uh...sure do like rocks, huh."
+			resultsDiv.appendChild(itemJudge) 
+		} else if (gameCount == 5 && paperCount == 5) {
+			itemJudge.textContent = "You played Paper all 5 times! Golly, do you like paper!"
+			resultsDiv.appendChild(itemJudge) 
+		} else if (gameCount == 5 && scissorsCount == 5) {
+			itemJudge.textContent = "You played Scissors all 5 times! Wow do you like scissors...Hmm."
+			resultsDiv.appendChild(itemJudge) 
+		} else if (gameCount == 5 && rockCount !== 5 && scissorsCount !== 5 && paperCount !== 5) {
+			 itemJudge.textContent = "You played Rock " + rockCount + " times, Paper " + paperCount + " times, and Scissors " + scissorsCount + " times."
+			resultsDiv.appendChild(itemJudge)
 		}
-	}
-	// call function to start 5 rounds of the game
-	game()
+
+		}
+		
 	
+		
+
+
+	window.addEventListener('click', playRound)
+
+
 </script>
